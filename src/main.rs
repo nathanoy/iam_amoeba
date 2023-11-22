@@ -152,7 +152,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Read Image in: {:.2}s", t0.elapsed().as_secs_f32());
 
     t0 = Instant::now();
-    let mut img = image::imageops::resize(&img, 800, 600, image::imageops::FilterType::Triangle);
+    img = image::imageops::resize(&img, 800, 600, image::imageops::FilterType::Triangle);
     println!("Resized in: {:.2}s", t0.elapsed().as_secs_f32());
 
     // Start
