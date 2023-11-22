@@ -5,5 +5,5 @@
 
 # Usage:
 ```
-cargo run --release -- .\img\img4.jpg
+cargo run --release -- <path/to/image>
 ```
