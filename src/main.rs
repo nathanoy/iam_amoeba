@@ -112,12 +112,18 @@ fn find_center_of_gravity(img: &mut RgbImage) -> Option<Point<u32>> {
     }
 
     // Darken the background
+    // piece_map.enumerate_pixels().for_each(|(x, y, px)| {
+    //     if *px != IS_PART_COLOR {
+    //         let px = img.get_pixel_mut(x, y);
+    //         let Rgb([r, g, b]) = *px;
+    //         const DD: u8 = 3; // Darkness divident
+    //         *px = Rgb([r / DD, g / DD, b / DD]);
+    //     }
+    // });
     piece_map.enumerate_pixels().for_each(|(x, y, px)| {
         if *px != IS_PART_COLOR {
             let px = img.get_pixel_mut(x, y);
-            let Rgb([r, g, b]) = *px;
-            const DD: u8 = 3; // Darkness divident
-            *px = Rgb([r / DD, g / DD, b / DD]);
+            *px = Rgb([30, 30, 40]);
         }
     });
 
@@ -145,9 +151,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut img = ImageReader::open(filename)?.decode()?.to_rgb8();
     println!("Read Image in: {:.2}s", t0.elapsed().as_secs_f32());
 
-    // t0 = Instant::now();
-    // let mut img = resize(&img, 800, 600, FilterType::Triangle);
-    // println!("Resized in: {:.2}s", t0.elapsed().as_secs_f32());
+    t0 = Instant::now();
+    let mut img = image::imageops::resize(&img, 800, 600, image::imageops::FilterType::Triangle);
+    println!("Resized in: {:.2}s", t0.elapsed().as_secs_f32());
 
     // Start
     t0 = Instant::now();
