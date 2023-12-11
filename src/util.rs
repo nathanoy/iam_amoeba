@@ -1,6 +1,8 @@
 use std::error::Error;
 use std::iter::Sum;
 use std::ops::{Add, Div};
+
+#[allow(unused_imports)]
 use std::process::Command;
 
 use image::{DynamicImage, Rgb};
@@ -45,9 +47,20 @@ where
 }
 
 pub fn show_img(img: &DynamicImage) -> Result<(), Box<dyn Error>> {
-    const PATH: &str = "tmp.jpg";
+    const PATH: &str = "out.png";
+
     img.save(PATH)?;
+    println!("Saved output to: {}", PATH);
+
+    #[cfg(target_os = "windows")]
     Command::new("cmd").args(["/C", "start", PATH]).spawn()?;
+
+    #[cfg(target_os = "macos")]
+    Command::new("open").arg(PATH).spawn()?;
+
+    #[cfg(target_os = "linux")]
+    Command::new("xdg-open").arg(PATH).spawn()?;
+
     Ok(())
 }
 
