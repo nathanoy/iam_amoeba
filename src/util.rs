@@ -46,11 +46,11 @@ where
     Some(itms.iter().sum::<T>() / itms.len().try_into().ok()?)
 }
 
-pub fn show_img(img: &DynamicImage) -> Result<(), Box<dyn Error>> {
+pub fn show_img(img: &DynamicImage) -> Result<&str, Box<dyn Error>> {
     const PATH: &str = "out.png";
 
     img.save(PATH)?;
-    println!("Saved output to: {}", PATH);
+    // println!("Saved output to: {}", PATH);
 
     #[cfg(target_os = "windows")]
     Command::new("cmd").args(["/C", "start", PATH]).spawn()?;
@@ -61,13 +61,13 @@ pub fn show_img(img: &DynamicImage) -> Result<(), Box<dyn Error>> {
     #[cfg(target_os = "linux")]
     Command::new("xdg-open").arg(PATH).spawn()?;
 
-    Ok(())
+    Ok(PATH)
 }
 
 pub fn color_distance(Rgb(c1): Rgb<u8>, Rgb(c2): Rgb<u8>) -> f32 {
     // Alternative color distance function
-    // let Rgb([r0, g0, b0]) = c1;
-    // let Rgb([r, g, b]) = c2;
+    // let [r0, g0, b0] = c1;
+    // let [r, g, b] = c2;
 
     // // Pytagoras3d
     // (((r0 as i32 - r as i32) * (r0 as i32 - r as i32)
